@@ -23,3 +23,7 @@ Suggests:
     withr
 Roxygen: list(wrap = FALSE)
 RoxygenNote: 6.1.0
+Collate: 
+    'traversal.R'
+    'graph.R'
+    'package.R'

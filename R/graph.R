@@ -1,3 +1,6 @@
+#' @include traversal.R
+NULL
+
 ## We use [R6](https://github.com/wch/R6) instead of the built-in 
 ## [reference classes](https://stat.ethz.ch/R-manual/R-devel/library/methods/html/refClass.html) 
 ## for several reasons.
@@ -21,11 +24,14 @@
 #' @docType class
 graphNode_ <- R6::R6Class("graphNode",
   public = list(
-    .edges = list(),                
-    .value = NULL,
+    .edges   = list(),                
+    .backwards_edges = list(),
+    .value   = NULL,
+    .address = NULL,
 
     initialize = function(value) {
-      self$.value <- value
+      self$.value   <- value
+      self$.address <- pryr::address(self)
     },
 
     value = function() {
@@ -35,8 +41,13 @@ graphNode_ <- R6::R6Class("graphNode",
     add_edge = function(node) {
       stopifnot(is(node, "graphNode"))
       # Avoid copy creation.
-      address <- eval.parent(substitute(pryr::address(node)))
-      self$.edges[[address]] <- node
+      self$.edges[[node$address()]] <- node
+      node$add_backwards_edge(self)
+    },
+
+    add_backwards_edge = function(edge_node) {
+      stopifnot(is(edge_node, "graphNode"))
+      self$.backwards_edges[[edge_node$address()]] <- edge_node
     },
 
     edges = function() {
@@ -45,6 +56,10 @@ graphNode_ <- R6::R6Class("graphNode",
 
     num_edges = function() {
       length(self$.edges)
+    },
+
+    address = function() {
+      self$.address
     }
   )
 )
@@ -98,8 +113,19 @@ graph_ <- R6::R6Class("graph",
       self$.bootnode <- bootnode
     },
 
+    bootnode = function() {
+      self$.bootnode
+    },
+
     bootnode_value = function() {
       self$.bootnode$value()
+    },
+
+    size = function() {
+      counter  <- list2env(list(n = 1), emptyenv())
+      strategy <- graphBFSTraversalStrategy(function(node) { counter$n <- counter$n + 1 })
+      strategy$traverse(self)
+      counter$n
     }
   )
 )
