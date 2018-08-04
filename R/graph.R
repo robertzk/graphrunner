@@ -34,7 +34,17 @@ graphNode_ <- R6::R6Class("graphNode",
 
     add_edge = function(node) {
       stopifnot(is(node, "graphNode"))
-      self$.edges[[pryr::address(node)]] <- node
+      # Avoid copy creation.
+      address <- eval.parent(substitute(pryr::address(node)))
+      self$.edges[[address]] <- node
+    },
+
+    edges = function() {
+      self$.edges
+    },
+
+    num_edges = function() {
+      length(self$.edges)
     }
   )
 )
