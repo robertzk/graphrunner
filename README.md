@@ -1,4 +1,4 @@
-Graphical Task Execution for R
+Graphical Task Execution for R [![Documentation](https://img.shields.io/badge/rocco-%E2%9C%93-blue.svg)](http://robertzk.github.io/graphrunner/) 
 ===========
 
 Graphrunners abstract the notion of executing a graph of tasks in the R language.
