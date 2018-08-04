@@ -1,0 +1,24 @@
+Package: graphrunner
+Title: Graphical Task Execution Engine
+Description: Graphrunner forms an abstraction layer around common
+    task arrays in R that can be interpreted as directed graphs.
+Version: 0.1.0
+Author: Robert Krzyzanowski <rob@syberia.io>
+Maintainer: Robert Krzyzanowski <rob@syberia.io>
+Authors@R: c(person("Robert", "Krzyzanowski", email = "rob@syberia.io", role = c("aut", "cre")))
+Depends:
+    R (>= 3.4.0)
+License: MIT + file LICENSE
+LazyData: true
+Imports:
+    crayon,
+    R6
+Suggests:
+    knitr,
+    microbenchmark,
+    objectdiff,
+    testthat,
+    testthatsomemore,
+    withr
+Roxygen: list(wrap = FALSE)
+RoxygenNote: 6.1.0
