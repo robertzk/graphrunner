@@ -15,7 +15,8 @@ graphTraversalStrategy <- R6::R6Class('graphTraversalStrategy',
 
 #' A breadth-first traversal strategy.
 #'
-#' This graph traversal strategy 
+#' This graph traversal strategy begins from the boot node and
+#' traverses "breadth-first" outward.
 #'
 #' @name graphTraversalStrategy
 #' @format NULL

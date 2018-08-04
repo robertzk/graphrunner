@@ -14,6 +14,9 @@ graph(...)
 \item{...}{Arguments to pass to graph initialization.}
 }
 \description{
-An R6 representation of a graph data structure.
+All graphs are assumed to be connected (if they are not, use a list
+of graphs instead). Any distinguished canonical node on the graph,
+called the boot node, will be used to represent the entire graph
+and will be the first node for purposes of traversal.
 }
 \keyword{datasets}
