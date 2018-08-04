@@ -22,7 +22,15 @@
 graphNode_ <- R6::R6Class('graphNode',
   public = list(
     .edges = list(),                
-    .value = NULL
+    .value = NULL,
+
+    initialize = function(value) {
+      self$.value <- value
+    },
+
+    value = function() {
+      self$.value
+    }
   )
 )
 
