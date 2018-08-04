@@ -54,6 +54,10 @@ graphNode_ <- R6::R6Class("graphNode",
       self$.edges
     },
 
+    backwards_edges = function() {
+      self$.backwards_edges
+    },
+
     num_edges = function() {
       length(self$.edges)
     },
@@ -122,8 +126,8 @@ graph_ <- R6::R6Class("graph",
     },
 
     size = function() {
-      counter  <- list2env(list(n = 1), emptyenv())
-      strategy <- graphBFSTraversalStrategy(function(node) { counter$n <- counter$n + 1 })
+      counter  <- list2env(list(n = 0), parent = emptyenv())
+      strategy <- graphBFSTraversalStrategy$new(function(node) { counter$n <- counter$n + 1 })
       strategy$traverse(self)
       counter$n
     }
@@ -155,6 +159,6 @@ graph <- structure(
 #' @return \code{TRUE} if the object is of class
 #'    \code{graph}, \code{FALSE} otherwise.
 is.graph <- function(obj) {
-  inherits(obj, "graph")
+  is(obj, "graph") || inherits(obj, "graph")
 }
 

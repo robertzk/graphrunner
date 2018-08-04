@@ -9,7 +9,7 @@
 graphTraversalStrategy <- R6::R6Class('graphTraversalStrategy',
   public = list(
     .visited = logical(0),
-    .strategy = identity,
+    .strategy = NULL,
 
     initialize = function(strategy) {
       stopifnot(is.function(strategy))
@@ -37,23 +37,23 @@ graphBFSTraversalStrategy <- R6::R6Class('graphBFSTraversalStrategy',
       if (is.graph(node)) {
         self$.visited <- logical(0)
         on.exit(self$.visited <- logical(0))
-        self$traverse(graph$bootnode())
+        self$traverse(node$bootnode(), directed = directed)
       } else if (is.graphNode(node)) {
-        if (self$.visited[node$address()]) {
+        if (isTRUE(self$.visited[node$address()])) {
           return()
         }
         self$.strategy(node)
         self$.visited[node$address()] <- TRUE
-        edges <- graph$bootnode$edges()
+        edges <- node$edges()
         if (!isTRUE(directed)) {
           # Go through edges *and* backwards edges in case some nodes
           # are directionally isolated (e.g., they flow out to the bootnode,
           # but the bootnode does not flow back to the through any path).
-          edges <- c(edges, graph$bootnode$backwards_edges())
+          edges <- c(edges, node$backwards_edges())
         }
         for (edge in edges) {
-          if (!self$.visited[edge$address()]) {
-            self$traverse(edge)
+          if (!isTRUE(self$.visited[edge$address()])) {
+            self$traverse(edge, directed = directed)
           }
         }
       } else {

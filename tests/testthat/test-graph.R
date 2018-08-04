@@ -62,5 +62,21 @@ describe("graph", {
     expect_equal(graph$bootnode_value(), 1)
     expect_equal(graph$bootnode()$num_edges(), 4)
   })
+
+  test_that("it can determine the size of a trivial graph", {
+    expect_equal(graph$new(graphNode$new(1))$size(), 1)
+  })
+  
+  test_that("it can determine the size of a non-trivial graph", {
+    nodes <- lapply(seq(1, 10), graphNode$new)
+    lapply(seq(2, 5), function(i) { nodes[[1]]$add_edge(nodes[[i]]) })
+    nodes[[2]]$add_edge(nodes[[6]])
+    nodes[[3]]$add_edge(nodes[[7]])
+    nodes[[4]]$add_edge(nodes[[8]])
+    nodes[[9]]$add_edge(nodes[[1]])
+    graph <- graph$new(nodes[[1]])
+    expect_equal(graph$size(), 9)
+  })
+
 })
 
