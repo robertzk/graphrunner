@@ -6,7 +6,7 @@
 #' 
 #' @docType package
 #' @name graphrunner
-#' @import crayon R6
+#' @import crayon pryr R6
 #' @author Robert Krzyzanowski <\url{http://syberia.io}>
 #' @seealso The core function in this package: \code{\link{stagerunner}}. It
 #'   defines the constructor creating graphrunner objects that allow you to

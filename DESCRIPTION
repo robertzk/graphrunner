@@ -12,6 +12,7 @@ License: MIT + file LICENSE
 LazyData: true
 Imports:
     crayon,
+    pryr,
     R6
 Suggests:
     knitr,
