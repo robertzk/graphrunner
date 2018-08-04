@@ -19,7 +19,7 @@
 #' @name graphNode
 #' @format NULL
 #' @docType class
-graphNode_ <- R6::R6Class('graphNode',
+graphNode_ <- R6::R6Class("graphNode",
   public = list(
     .edges = list(),                
     .value = NULL,
@@ -30,6 +30,11 @@ graphNode_ <- R6::R6Class('graphNode',
 
     value = function() {
       self$.value
+    },
+
+    add_edge = function(node) {
+      stopifnot(is(node, "graphNode"))
+      self$.edges[[pryr::address(node)]] <- node
     }
   )
 )
@@ -74,9 +79,18 @@ is.graphNode <- function(obj) {
 #' @name graph
 #' @format NULL
 #' @docType class
-graph_ <- R6::R6Class('graph',
+graph_ <- R6::R6Class("graph",
   public = list(
-    .bootnode = NULL               
+    .bootnode = NULL,
+
+    initialize = function(bootnode) {
+      stopifnot(is(bootnode, "graphNode"))
+      self$.bootnode <- bootnode
+    },
+
+    bootnode_value = function() {
+      self$.bootnode$value()
+    }
   )
 )
 

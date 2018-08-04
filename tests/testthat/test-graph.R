@@ -11,7 +11,9 @@ describe("graph", {
   context("graph")
   
   test_that("it can initialize correctly", {
-    expect_true(TRUE)
+    node  <- graphNode$new(1)
+    graph <- graph$new(node)
+    expect_equal(graph$bootnode_value(), 1)
   })
 })
 
